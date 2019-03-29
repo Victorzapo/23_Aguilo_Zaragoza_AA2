@@ -1,7 +1,11 @@
 #pragma once
 
+struct Map {
 
+	char **map;
 
-void initMap(char *map[], int ROWS, int COLUMNS);
+	Map(int ROWS, int COLUMNS);
 
-void printMap(char * map[], int ROWS, int COLUMNS);
+	void printMap(int ROWS, int COLUMNS);
+
+}

@@ -11,35 +11,31 @@ Player player;
 int main() {
 
 
-	
-	
+
+
 	/////////////////////////////////// MAP ////////////////////////
-	//Variables of the map
 
-	// Falta implementar la lectura del fichero config.txt
-	const int ROWS = 20;  //Row test
-	const int COLUMNS = 20; //Colum test
-	
-	//Map declaration
-	char **map;
-	map = new char*[ROWS];
-	for (int i = 0; i < ROWS; i++)
-		map[i] = new char[COLUMNS];
+	//inicializo las dos variables que determinan el tamaño del tablero 
+	int ROWS;
+	int COLUMNS;
+	//No estoy muy seguro de esto pero supuestamente inicializa una variable Map con el constructor por defecto
+	Map Map();
 
-	initMap(map, ROWS, COLUMNS);
+
+
 
 
 	/////////////////////////////// GAMELOOP ////////////////////////
 
 	while (GetAsyncKeyState(VK_ESCAPE) == false) {
-		
+
 		std::cout << player.score;
-		movementPlayer(player, map, ROWS, COLUMNS);
-		printMap(map, ROWS, COLUMNS);
+		movementPlayer(player, map, ROWS, COLUMNS); //Supuestamente ese map deberia ser el puntero que creamos en la struct Map
+		Map::printMap(ROWS, COLUMNS); //Hay error
 		Sleep(500);
-		
+
 		system("CLS"); //Cleans screen
 	}
 	return 0;
-	
+
 }
