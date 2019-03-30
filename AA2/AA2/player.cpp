@@ -14,8 +14,8 @@ void movementPlayer(Player &player, char **map, int COLUMS, int ROWS)
 			player.score++; //Update score if points (Same on all movements)
 
 
-		if (player.j - 1 < 0) //Limit check (Same on all movements)
-			player.j = COLUMS - 1; //New position if is on the limit (Same on all movements)
+		if (player.j == 0) //Limit check (Same on all movements)
+			player.j = ROWS - 1; //New position if is on the limit (Same on all movements)
 		else
 			player.j--; //If its not on the limit updates position (Same on all movements)
 	}
@@ -27,7 +27,7 @@ void movementPlayer(Player &player, char **map, int COLUMS, int ROWS)
 		if (map[player.i][player.j + 1] == '*')
 			player.score++;
 
-		if (player.j + 1 == COLUMS)
+		if (player.j + 1 == ROWS)
 			player.j = 0;
 		else
 			player.j++;
@@ -40,10 +40,10 @@ void movementPlayer(Player &player, char **map, int COLUMS, int ROWS)
 		map[player.i][player.j] = ' ';
 
 		if (map[player.i - 1][player.j] == '*')
+		{
 			player.score++;
-
-		if (player.i - 1 < 1)
-			player.i = ROWS - 1;
+			player.i--;
+		}
 		else
 			player.i--;
 	}
@@ -52,14 +52,13 @@ void movementPlayer(Player &player, char **map, int COLUMS, int ROWS)
 	{
 		map[player.i][player.j] = ' ';
 
-		if (map[player.i + 1][player.j] == '*')
+		if (map[player.i + 1][player.j] == '*') {
 			player.score++;
-
-		if (player.i + 1 == ROWS - 1)
-			player.i = 0;
+			player.i++;
+		}
 		else
 			player.i++;
 	}
-
+	
 	map[player.i][player.j] = '>'; //Puts player on a update position
 }
