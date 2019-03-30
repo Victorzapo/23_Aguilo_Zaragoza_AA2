@@ -4,8 +4,8 @@ struct Map {
 
 	char **map;
 
-	Map(int ROWS, int COLUMNS);
+	Map(int &ROWS, int &COLUMNS);
 
-	void printMap(int ROWS, int COLUMNS);
+};
 
-}
+void printMap(int ROWS, int COLUMNS, char **map);

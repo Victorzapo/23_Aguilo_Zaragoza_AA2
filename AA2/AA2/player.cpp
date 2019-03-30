@@ -2,7 +2,7 @@
 #include  <Windows.h>
 #include "Types.h"
 
-void movementPlayer(Player &player, char *map[], int COLUMS, int ROWS)
+void movementPlayer(Player &player, char **map, int COLUMS, int ROWS)
 {
 	char mapChar = 219; //(Hay que ponerlo en Constants.h)
 
@@ -12,8 +12,8 @@ void movementPlayer(Player &player, char *map[], int COLUMS, int ROWS)
 
 		if (map[player.i][player.j - 1] == '*') //Checks if points (Same on all movements)
 			player.score++; //Update score if points (Same on all movements)
-		
-		
+
+
 		if (player.j - 1 < 0) //Limit check (Same on all movements)
 			player.j = COLUMS - 1; //New position if is on the limit (Same on all movements)
 		else
@@ -63,7 +63,3 @@ void movementPlayer(Player &player, char *map[], int COLUMS, int ROWS)
 
 	map[player.i][player.j] = '>'; //Puts player on a update position
 }
-
-
-
-

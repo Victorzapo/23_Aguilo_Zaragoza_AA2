@@ -9,6 +9,7 @@ struct Player
 };
 
 
-void movementPlayer(Player &player, char *map[], int COLUMS, int ROWS);
+void movementPlayer(Player &player, char **map, int COLUMS, int ROWS);
 
 
+#pragma once

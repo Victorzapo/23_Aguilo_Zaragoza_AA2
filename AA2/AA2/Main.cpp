@@ -11,28 +11,26 @@ Player player;
 int main() {
 
 
-
-
-	/////////////////////////////////// MAP ////////////////////////
+	/////////////////////////////////// MAP ///////////////////////////
 
 	//inicializo las dos variables que determinan el tamaño del tablero 
 	int ROWS;
 	int COLUMNS;
 	//No estoy muy seguro de esto pero supuestamente inicializa una variable Map con el constructor por defecto
-	Map Map();
+	Map map(ROWS, COLUMNS);
 
 
 
 
 
-	/////////////////////////////// GAMELOOP ////////////////////////
+	/////////////////////////////// GAMELOOP /////////////////////////
 
 	while (GetAsyncKeyState(VK_ESCAPE) == false) {
 
-		std::cout << player.score;
-		movementPlayer(player, map, ROWS, COLUMNS); //Supuestamente ese map deberia ser el puntero que creamos en la struct Map
-		Map::printMap(ROWS, COLUMNS); //Hay error
-		Sleep(500);
+		std::cout << player.score << std::endl;
+		movementPlayer(player, map.map, ROWS, COLUMNS); //Supuestamente ese map deberia ser el puntero que creamos en la struct Map
+		printMap(ROWS, COLUMNS, map.map);
+		Sleep(75);
 
 		system("CLS"); //Cleans screen
 	}
