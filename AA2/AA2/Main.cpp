@@ -3,32 +3,39 @@
 #include <Windows.h>
 #include "Map.h"
 #include "player.h"
+#include "Constants.h"
 
 
-Player player;
 
 
 int main() {
 
+	srand(time(NULL));
+	/////////////////////////////////// initializations ///////////////////////////
 
-	/////////////////////////////////// MAP ///////////////////////////
-
-	//inicializo las dos variables que determinan el tamaño del tablero 
+	//initialize the map with config.txt information
 	int ROWS;
 	int COLUMNS;
-	//No estoy muy seguro de esto pero supuestamente inicializa una variable Map con el constructor por defecto
+
 	Map map(ROWS, COLUMNS);
 
+	//Player Random start
+	Player player;
+	
+	player.i = rand() % ROWS + 1;
+	player.j = rand() % COLUMNS + 1;
 
-
-
+	while (map.map[player.i][player.j] == mapChar) {
+		player.i = rand() % ROWS + 1;
+		player.j = rand() % COLUMNS + 1;
+	}
 
 	/////////////////////////////// GAMELOOP /////////////////////////
 
 	while (GetAsyncKeyState(VK_ESCAPE) == false) {
 
 		std::cout << player.score << std::endl;
-		movementPlayer(player, map.map, ROWS, COLUMNS); //Supuestamente ese map deberia ser el puntero que creamos en la struct Map
+		movementPlayer(player, map.map, ROWS, COLUMNS);
 		printMap(ROWS, COLUMNS, map.map);
 		Sleep(75);
 

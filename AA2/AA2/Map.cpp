@@ -2,19 +2,17 @@
 #include <iostream>
 #include <fstream>
 #include <windows.h>
-//#include <stdlib.h>
+#include "Constants.h"
 
 
 
 Map::Map(int &ROWS, int &COLUMNS) {
 
 	
-
+	//Reads infortmation and fills the Dynarray
 	std::ifstream inFile;
 	inFile.open("config.txt");
 
-
-	//Estos dos aux los creo porque sino cuando leo del fichero no me pilla los dos ints para las filas y columnas
 	char aux1, aux2;
 
 	inFile >> ROWS >> aux1 >> COLUMNS >> aux2;
@@ -27,14 +25,17 @@ Map::Map(int &ROWS, int &COLUMNS) {
 	}
 	inFile.close();
 
-	for (int i = 0; i < ROWS; i++) { //Changes all 'X' for walls
+	//Changes all 'X' for walls
+	for (int i = 0; i < ROWS; i++) { 
 		for (int j = 0; j < COLUMNS; j++) {
 			if (map[i][j] == 'X')
-				map[i][j] = 219;
+				map[i][j] = mapChar;
 		}
 	}
 }
 
+
+//FALTA ARREGLAR COLOR DEL PLAYER Y PUNTOS
 	void printMap(int ROWS, int COLUMNS, char **map) {
 
 		system("color 1"); //Changes color to blue
@@ -44,7 +45,7 @@ Map::Map(int &ROWS, int &COLUMNS) {
 				std::cout << map[i][j];
 			std::cout << std::endl;
 		}
-	}
+	} 
 
 
 

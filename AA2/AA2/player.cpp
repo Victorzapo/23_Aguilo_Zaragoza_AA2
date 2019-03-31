@@ -1,10 +1,10 @@
 #include "player.h"
 #include  <Windows.h>
 #include "Types.h"
+#include "Constants.h"
 
 void movementPlayer(Player &player, char **map, int COLUMS, int ROWS)
 {
-	char mapChar = 219; //(Hay que ponerlo en Constants.h)
 
 	if (GetAsyncKeyState(VK_LEFT) && map[player.i][player.j - 1] != mapChar) //Left movement
 	{
@@ -32,8 +32,6 @@ void movementPlayer(Player &player, char **map, int COLUMS, int ROWS)
 		else
 			player.j++;
 	}
-
-	//Limites verticales hay que pulirlos, dan algunos errores
 
 	else if (GetAsyncKeyState(VK_UP) && map[player.i - 1][player.j] != mapChar) //Up movement 
 	{
