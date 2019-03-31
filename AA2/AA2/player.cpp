@@ -57,6 +57,6 @@ void movementPlayer(Player &player, char **map, int COLUMS, int ROWS)
 		else
 			player.i++;
 	}
-	
+
 	map[player.i][player.j] = '>'; //Puts player on a update position
 }

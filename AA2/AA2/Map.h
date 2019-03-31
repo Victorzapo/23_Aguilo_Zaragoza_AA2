@@ -8,4 +8,4 @@ struct Map {
 
 };
 
-void printMap(int ROWS, int COLUMNS, char **map);
+void printMap(int ROWS, int COLUMNS, char **map, const char mapChar);

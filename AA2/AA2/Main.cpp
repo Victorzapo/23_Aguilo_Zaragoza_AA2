@@ -21,7 +21,7 @@ int main() {
 
 	//Player Random start
 	Player player;
-	
+
 	player.i = rand() % ROWS + 1;
 	player.j = rand() % COLUMNS + 1;
 
@@ -34,9 +34,12 @@ int main() {
 
 	while (GetAsyncKeyState(VK_ESCAPE) == false) {
 
+		HANDLE consolehwnd = GetStdHandle(STD_OUTPUT_HANDLE);
+		SetConsoleTextAttribute(consolehwnd, 15);
+
 		std::cout << player.score << std::endl;
 		movementPlayer(player, map.map, ROWS, COLUMNS);
-		printMap(ROWS, COLUMNS, map.map);
+		printMap(ROWS, COLUMNS, map.map, mapChar);
 		Sleep(75);
 
 		system("CLS"); //Cleans screen
