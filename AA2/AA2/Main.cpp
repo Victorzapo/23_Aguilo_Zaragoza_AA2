@@ -9,8 +9,6 @@
 
 
 int main() {
-
-	srand(time(NULL));
 	/////////////////////////////////// initializations ///////////////////////////
 
 	//initialize the map with config.txt information
@@ -19,16 +17,11 @@ int main() {
 
 	Map map(ROWS, COLUMNS);
 
-	//Player Random start
+	//Player start
 	Player player;
 
-	player.i = rand() % ROWS + 1;
-	player.j = rand() % COLUMNS + 1;
-
-	while (map.map[player.i][player.j] == mapChar) {
-		player.i = rand() % ROWS + 1;
-		player.j = rand() % COLUMNS + 1;
-	}
+	player.i = 5;
+	player.j = 5;
 
 	/////////////////////////////// GAMELOOP /////////////////////////
 

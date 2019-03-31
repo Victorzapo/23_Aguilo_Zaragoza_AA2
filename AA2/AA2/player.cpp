@@ -42,11 +42,12 @@ void movementPlayer(Player &player, char **map, int COLUMS, int ROWS)
 			player.score++;
 			player.i--;
 		}
+		else if (player.i - 1 < 1)
+			player.i = ROWS;
 		else
 			player.i--;
 	}
-
-	else if (GetAsyncKeyState(VK_DOWN) && map[player.i + 1][player.j] != mapChar) //Down movement
+	if (GetAsyncKeyState(VK_DOWN) && map[player.i + 1][player.j] != mapChar) //Down movement
 	{
 		map[player.i][player.j] = ' ';
 
@@ -54,9 +55,12 @@ void movementPlayer(Player &player, char **map, int COLUMS, int ROWS)
 			player.score++;
 			player.i++;
 		}
+		else if (player.i > ROWS - 1)
+			player.i = 1;
 		else
 			player.i++;
 	}
+	
 
 	map[player.i][player.j] = '>'; //Puts player on a update position
 }
