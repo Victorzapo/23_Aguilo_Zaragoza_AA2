@@ -32,11 +32,17 @@ Map::Map(int &ROWS, int &COLUMNS) {
 				map[i][j] = mapChar;
 		}
 	}
+
+
+	
+
+
+
+
 }
 
 
-//FALTA ARREGLAR COLOR DEL PLAYER Y PUNTOS
-void printMap(int ROWS, int COLUMNS, char **map, const char mapChar) {
+void printMap(int ROWS, int COLUMNS, char **map) {
 
 	HANDLE consolehwnd = GetStdHandle(STD_OUTPUT_HANDLE);
 	//system("color 1"); //Changes color to blue
@@ -55,6 +61,3 @@ void printMap(int ROWS, int COLUMNS, char **map, const char mapChar) {
 		std::cout << std::endl;
 	}
 }
-
-
-
