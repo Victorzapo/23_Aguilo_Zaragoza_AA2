@@ -2,65 +2,76 @@
 #include  <Windows.h>
 #include "Types.h"
 #include "Constants.h"
+#include <iostream>
 
-void movementPlayer(Player &player, char **map, int COLUMS, int ROWS)
+void Player::movementPlayer(char **map, int COLUMS, int ROWS)
 {
 
-	if (GetAsyncKeyState(VK_LEFT) && map[player.i][player.j - 1] != mapChar) //Left movement
-	{
-		map[player.i][player.j] = ' '; //Emptys the actual position (Same on all movements)
+	if (GetAsyncKeyState(VK_LEFT) && map[i][j - 1] != mapChar) { //Left movement
 
-		if (map[player.i][player.j - 1] == '*') //Checks if points (Same on all movements)
-			player.score++; //Update score if points (Same on all movements)
+		map[i][j] = ' '; //Emptys the actual position (Same on all movements
 
+		if (map[i][j - 1] == '*') //Checks if points (Same on all movements)
+			score++; //Update score if points (Same on all movements)
 
-		if (player.j == 0) //Limit check (Same on all movements)
-			player.j = ROWS - 1; //New position if is on the limit (Same on all movements)
+		if (j == 0) //Limit check (Same on all movements)
+			j = ROWS - 1; //New position if is on the limit (Same on all movements)
+
 		else
-			player.j--; //If its not on the limit updates position (Same on all movements)
+			j--; //If its not on the limit updates position (Same on all movements)
 	}
 
-	else if (GetAsyncKeyState(VK_RIGHT) && map[player.i][player.j + 1] != mapChar) //Right movement
+	else if (GetAsyncKeyState(VK_RIGHT) && map[i][j + 1] != mapChar) //Right movement
 	{
-		map[player.i][player.j] = ' ';
+		map[i][j] = ' ';
 
-		if (map[player.i][player.j + 1] == '*')
-			player.score++;
-
-		if (player.j + 1 == ROWS)
-			player.j = 0;
+		if (map[i][j + 1] == '*')
+			score++;
+		if (j + 1 == ROWS)
+			j = 0;
 		else
-			player.j++;
+			j++;
 	}
 
-	else if (GetAsyncKeyState(VK_UP) && map[player.i - 1][player.j] != mapChar) //Up movement 
+	else if (GetAsyncKeyState(VK_UP) && map[i - 1][j] != mapChar) //Up movement 
 	{
-		map[player.i][player.j] = ' ';
+		map[i][j] = ' ';
 
-		if (map[player.i - 1][player.j] == '*')
+		if (map[i - 1][j] == '*')
 		{
-			player.score++;
-			player.i--;
+			score++;
+			i--;
 		}
-		else if (player.i - 1 < 1)
-			player.i = ROWS;
+		else if (i - 1 < 1)
+			i = ROWS;
 		else
-			player.i--;
+			i--;
 	}
-	if (GetAsyncKeyState(VK_DOWN) && map[player.i + 1][player.j] != mapChar) //Down movement
+	if (GetAsyncKeyState(VK_DOWN) && map[i + 1][j] != mapChar) //Down movement
 	{
-		map[player.i][player.j] = ' ';
+		map[i][j] = ' ';
 
-		if (map[player.i + 1][player.j] == '*') {
-			player.score++;
-			player.i++;
+		if (map[i + 1][j] == '*') {
+			score++;
+			i++;
 		}
-		else if (player.i > ROWS - 1)
-			player.i = 1;
+		else if (i > ROWS - 1)
+			i = 1;
 		else
-			player.i++;
+			i++;
 	}
 	
 
-	map[player.i][player.j] = '>'; //Puts player on a update position
+	map[i][j] = '>'; //Puts player on a update position
+}
+
+void Player::printLifes()
+{
+
+	std::cout << "LIVES";
+
+	for (int i = 0; i < lifes; i++) {
+		std::cout << mapChar << " ";
+	}
+
 }

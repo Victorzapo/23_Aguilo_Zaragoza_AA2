@@ -16,12 +16,11 @@ int main() {
 	bool gameOver = false;
 	//initialize the map with config.txt information
 	HANDLE consolehwnd = GetStdHandle(STD_OUTPUT_HANDLE);
-	int ROWS;
-	int COLUMNS;
 
-	Map map(ROWS, COLUMNS);
+	Map map;
 
-	int points = maxPoints(ROWS, COLUMNS, map.map);
+	
+	int points = map.MaxPoints();
 
 	//Player start
 	Player player;
@@ -38,7 +37,7 @@ int main() {
 			SetConsoleTextAttribute(consolehwnd, 15);
 			std::cout << "PAUSED" << std::endl;
 			std::cout <<"SCORE: " << player.score << std::endl;
-			printMap(ROWS, COLUMNS, map.map);
+			map.PrintMap();
 			
 			if (GetAsyncKeyState(0x50)) //Checks if "P" is presed
 				pause = false;
@@ -55,15 +54,20 @@ int main() {
 			SetConsoleTextAttribute(consolehwnd, 15);
 			std::cout << "PLAYING" << std::endl;
 			std::cout << "SCORE: " << player.score << std::endl;
-			movementPlayer(player, map.map, ROWS, COLUMNS);
-			printMap(ROWS, COLUMNS, map.map);
+			player.movementPlayer(map.map, map.COLUMNS, map.ROWS);
+			map.PrintMap();
+			SetConsoleTextAttribute(consolehwnd, 15);
+			player.printLifes();
 			
 			if (GetAsyncKeyState(0x50)) //Checks if "P" is presed
 				pause = true;
 
 			if (player.score == points || GetAsyncKeyState(VK_SPACE)) {
-				gameOver = true;
-				init = false;
+				player.lifes--;
+				if (player.lifes == 0) {
+					init = false;
+					gameOver = true;
+				}
 			}
 
 
@@ -74,7 +78,7 @@ int main() {
 			SetConsoleTextAttribute(consolehwnd, 15);
 			std::cout << "GAME OVER" << std::endl;
 
-			printMap(ROWS, COLUMNS, map.map);
+			map.PrintMap();
 			
 			SetConsoleTextAttribute(consolehwnd, 15);
 			std::cout << "Your Score was " << player.score << " of " << points << "!" << std::endl;
@@ -100,11 +104,13 @@ int main() {
 			std::cout << "Press spacebar to start..." << std::endl;
 			if (GetAsyncKeyState(VK_SPACE))
 				init = true;
-			printMap(ROWS, COLUMNS, map.map);
+			map.PrintMap();
 			Sleep(75);
 			system("CLS");
 		}
 	}
+	
+	
 	return 0;
 
 }

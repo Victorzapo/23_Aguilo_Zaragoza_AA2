@@ -4,11 +4,12 @@ struct Map {
 
 	char **map;
 
-	Map(int &ROWS, int &COLUMNS);
-	
+	int ROWS;
+	int COLUMNS;
 
+	Map();
+	
+	void PrintMap();
+	int MaxPoints();
 };
 
-void printMap(int ROWS, int COLUMNS, char **map);
-
-int maxPoints(int ROWS, int COLUMNS, char **map);

@@ -6,7 +6,7 @@
 
 
 
-Map::Map(int &ROWS, int &COLUMNS) {
+Map::Map() {
 
 
 	//Reads infortmation and fills the Dynarray
@@ -42,7 +42,7 @@ Map::Map(int &ROWS, int &COLUMNS) {
 }
 
 
-void printMap(int ROWS, int COLUMNS, char **map) {
+void Map::PrintMap() {
 
 	HANDLE consolehwnd = GetStdHandle(STD_OUTPUT_HANDLE);
 	//system("color 1"); //Changes color to blue
@@ -62,7 +62,7 @@ void printMap(int ROWS, int COLUMNS, char **map) {
 	}
 }
 
-int maxPoints(int ROWS, int COLUMNS, char ** map)
+int Map::MaxPoints()
 {
 	int pointsCounter = 0;
 	
