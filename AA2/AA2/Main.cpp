@@ -21,6 +21,8 @@ int main() {
 
 	Map map(ROWS, COLUMNS);
 
+	int points = maxPoints(ROWS, COLUMNS, map.map);
+
 	//Player start
 	Player player;
 
@@ -59,6 +61,12 @@ int main() {
 			if (GetAsyncKeyState(0x50)) //Checks if "P" is presed
 				pause = true;
 
+			if (player.score == points || GetAsyncKeyState(VK_SPACE)) {
+				gameOver = true;
+				init = false;
+			}
+
+
 			Sleep(75);
 			system("CLS"); //Cleans screen
 		}
@@ -69,8 +77,21 @@ int main() {
 			printMap(ROWS, COLUMNS, map.map);
 			
 			SetConsoleTextAttribute(consolehwnd, 15);
-			std::cout << "Your Score was " << player.score << "!" << std::endl;
-			std::cout << "Nice!! " << std::endl;
+			std::cout << "Your Score was " << player.score << " of " << points << "!" << std::endl;
+			if(player.score <= 25% points && player.score >= 0)
+				std::cout << "That was embarrassing... " << std::endl;
+
+			else if (player.score <= 50% points && player.score > 25 % points)
+				std::cout << "Close of being good... " << std::endl;
+
+			else if(player.score <= 75 % points && player.score > 50 % points)
+				std::cout << "Good one! Half of the way! " << std::endl;
+
+			else if (player.score < points && player.score > 75 % points)
+				std::cout << "That was close as truck!" << std::endl;
+
+			else
+				std::cout << "Awesome! You win the Game!" << std::endl;
 			Sleep(75);
 			system("CLS");
 		}

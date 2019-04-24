@@ -61,3 +61,17 @@ void printMap(int ROWS, int COLUMNS, char **map) {
 		std::cout << std::endl;
 	}
 }
+
+int maxPoints(int ROWS, int COLUMNS, char ** map)
+{
+	int pointsCounter = 0;
+	
+	for (int i = 0; i < ROWS; i++) {
+		for (int j = 0; j < COLUMNS; j++) {
+			if (map[i][j] == '*')
+				pointsCounter++;
+		}
+	}
+	return pointsCounter;
+}
+

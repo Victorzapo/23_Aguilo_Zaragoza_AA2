@@ -10,3 +10,5 @@ struct Map {
 };
 
 void printMap(int ROWS, int COLUMNS, char **map);
+
+int maxPoints(int ROWS, int COLUMNS, char **map);
