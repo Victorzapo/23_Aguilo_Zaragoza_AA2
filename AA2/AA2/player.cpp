@@ -4,12 +4,13 @@
 #include "Constants.h"
 #include <iostream>
 
-void Player::movementPlayer(char **map, int COLUMS, int ROWS)
+void Player::movementPlayer(char **map, int COLUMS, int ROWS, int &playerDir)
 {
 
 	if (GetAsyncKeyState(VK_LEFT) && map[i][j - 1] != mapChar) { //Left movement
 
 		map[i][j] = ' '; //Emptys the actual position (Same on all movements
+		playerDir = 0; //saves player direction 
 
 		if (map[i][j - 1] == '*') //Checks if points (Same on all movements)
 			score++; //Update score if points (Same on all movements)
@@ -24,6 +25,7 @@ void Player::movementPlayer(char **map, int COLUMS, int ROWS)
 	else if (GetAsyncKeyState(VK_RIGHT) && map[i][j + 1] != mapChar) //Right movement
 	{
 		map[i][j] = ' ';
+		playerDir = 2;
 
 		if (map[i][j + 1] == '*')
 			score++;
@@ -36,6 +38,7 @@ void Player::movementPlayer(char **map, int COLUMS, int ROWS)
 	else if (GetAsyncKeyState(VK_UP) && map[i - 1][j] != mapChar) //Up movement 
 	{
 		map[i][j] = ' ';
+		playerDir = 3;
 
 		if (map[i - 1][j] == '*')
 		{
@@ -50,6 +53,7 @@ void Player::movementPlayer(char **map, int COLUMS, int ROWS)
 	if (GetAsyncKeyState(VK_DOWN) && map[i + 1][j] != mapChar) //Down movement
 	{
 		map[i][j] = ' ';
+		playerDir = 1;
 
 		if (map[i + 1][j] == '*') {
 			score++;
@@ -60,7 +64,7 @@ void Player::movementPlayer(char **map, int COLUMS, int ROWS)
 		else
 			i++;
 	}
-	
+
 
 	map[i][j] = '>'; //Puts player on a update position
 }

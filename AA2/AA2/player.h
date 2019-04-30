@@ -7,10 +7,11 @@ struct Player
 
 	int lifes = 3;
 	int score = 0;
-	
-	void movementPlayer(char **map, int COLUMS, int ROWS);
+
+	void movementPlayer(char **map, int COLUMS, int ROWS, int &playerDir);
 	void printLifes();
 };
+
 
 
 

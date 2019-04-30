@@ -33,12 +33,6 @@ Map::Map() {
 		}
 	}
 
-
-	
-
-
-
-
 }
 
 
@@ -65,7 +59,7 @@ void Map::PrintMap() {
 int Map::MaxPoints()
 {
 	int pointsCounter = 0;
-	
+
 	for (int i = 0; i < ROWS; i++) {
 		for (int j = 0; j < COLUMNS; j++) {
 			if (map[i][j] == '*')

@@ -8,7 +8,7 @@ struct Map {
 	int COLUMNS;
 
 	Map();
-	
+
 	void PrintMap();
 	int MaxPoints();
 };
