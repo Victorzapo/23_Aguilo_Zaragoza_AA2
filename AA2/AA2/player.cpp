@@ -46,7 +46,7 @@ void Player::movementPlayer(char **map, int COLUMS, int ROWS, int &playerDir)
 			i--;
 		}
 		else if (i - 1 < 1)
-			i = ROWS;
+			i = COLUMS;
 		else
 			i--;
 	}

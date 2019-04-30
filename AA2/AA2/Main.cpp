@@ -5,6 +5,8 @@
 #include "player.h"
 #include "Constants.h"
 #include "EnemyBlinky.h"
+#include "EnemyInky.h"
+#include "EnemyClyde.h"
 
 
 
@@ -33,6 +35,14 @@ int main() {
 	EnemyBlinky Blinky(1, 1, map.map);
 	Blinky.i = 1;
 	Blinky.j = 1;
+
+	EnemyInky Inky(7, 8, map.map);
+	Inky.i = 7;
+	Inky.j = 8;
+
+	EnemyClyde Clyde(12, 8, map.map);
+	Clyde.i = 12;
+	Clyde.j = 8;
 
 	//Hay que crear clases para cada uno
 	/*Enemy Inky(1, 10, map.map, 2);
@@ -87,6 +97,8 @@ int main() {
 			player.movementPlayer(map.map, map.COLUMNS, map.ROWS, playerDir);
 
 			Blinky.BlinkyMov(map, player);
+			Inky.InkyMov(map, player);
+			Clyde.ClydeMov(map, player);
 			//Inky.InkyMov(map.map, map.COLUMNS, map.ROWS, direction, nextAstInky, playerDir);
 			//Clyde.ClydeMov(map.map, map.COLUMNS, map.ROWS, direction, nextAstClyde, playerDir);
 
