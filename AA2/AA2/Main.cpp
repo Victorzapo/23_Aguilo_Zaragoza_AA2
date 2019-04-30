@@ -44,7 +44,7 @@ int main() {
 	Clyde.i = 12;
 	Clyde.j = 8;
 
-	//Hay que crear clases para cada uno
+	
 	/*Enemy Inky(1, 10, map.map, 2);
 	Inky.i = 1;
 	Inky.j = 10;

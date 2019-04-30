@@ -116,6 +116,8 @@ void EnemyBlinky::BlinkyMov(Map map, Player &player) {
 
 	if (i == player.i && j == player.j) { //Checks enemy hit
 		player.lifes--;
+		player.i = 5;
+		player.j = 5;
 		map.PrintMap();
 		SetConsoleTextAttribute(consolehwnd, 15);
 		std::cout << "Hit!";
@@ -128,107 +130,6 @@ void EnemyBlinky::BlinkyMov(Map map, Player &player) {
 }
 
 /*
-
-void Enemy::InkyMov(char **map, int COLUMNS, int ROWS, int &direction, bool &nextAst, int & playerDir) {
-
-	//left 
-	if (GetAsyncKeyState(VK_LEFT) && map[i][j - 1] != mapChar) {
-		if (nextAst == true) {
-			map[i][j] = '*';
-		}
-		else {
-			map[i][j] = ' ';
-		}
-		j--;
-	}
-
-	//down
-	if (GetAsyncKeyState(VK_DOWN) && map[i + 1][j] != mapChar) {
-		if (nextAst == true) {
-			map[i][j] = '*';
-		}
-		else {
-			map[i][j] = ' ';
-		}
-		i++;
-	}
-
-	//right
-	if (GetAsyncKeyState(VK_RIGHT) && map[i][j + 1] != mapChar) {
-		if (nextAst == true) {
-			map[i][j] = '*';
-		}
-		else {
-			map[i][j] = ' ';
-		}
-		j++;
-	}
-
-	//up
-	if (GetAsyncKeyState(VK_UP) && map[i - 1][j] != mapChar) {
-		if (nextAst == true) {
-			map[i][j] = '*';
-		}
-		else {
-			map[i][j] = ' ';
-		}
-		i--;
-	}
-
-
-	map[i][j] = '&';
-}
-void Enemy::ClydeMov(char **map, int COLUMNS, int ROWS, int &direction, bool &nextAst, int & playerDir) {
-	//podemos qiter direction y playerDir de todo menos de Blinky
-
-	//left 
-	if (GetAsyncKeyState(VK_RIGHT) && map[i][j - 1] != mapChar) {
-		if (nextAst == true) {
-			map[i][j] = '*';
-		}
-		else {
-			map[i][j] = ' ';
-		}
-		j--;
-	}
-
-	//down
-	if (GetAsyncKeyState(VK_UP) && map[i + 1][j] != mapChar) {
-		if (nextAst == true) {
-			map[i][j] = '*';
-		}
-		else {
-			map[i][j] = ' ';
-		}
-		i++;
-	}
-
-	//right
-	if (GetAsyncKeyState(VK_LEFT) && map[i][j + 1] != mapChar) {
-		if (nextAst == true) {
-			map[i][j] = '*';
-		}
-		else {
-			map[i][j] = ' ';
-		}
-		j++;
-	}
-
-	//up
-	if (GetAsyncKeyState(VK_DOWN) && map[i - 1][j] != mapChar) {
-		if (nextAst == true) {
-			map[i][j] = '*';
-		}
-		else {
-			map[i][j] = ' ';
-		}
-		i--;
-	}
-
-
-	map[i][j] = '$';
-}
-
 
 void Enemy::InkyInitialPosition(Enemy Inky, char **map, int COLUMNS, int ROWS) {
 	for (int i = 0; i < COLUMNS; i++) {

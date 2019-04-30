@@ -65,7 +65,8 @@ void Player::movementPlayer(char **map, int COLUMS, int ROWS, int &playerDir)
 		else
 			i++;
 	}
-
+	
+	
 
 	map[i][j] = '>'; //Puts player on a update position
 }

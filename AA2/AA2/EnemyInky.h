@@ -21,13 +21,4 @@ public:
 	EnemyInky(int i, int j, char **map);
 
 	void InkyMov(Map map, Player &player);
-	//void BlinkyMov(Map map, Player &player);
-
-	//void InkyMov(char **map, int COLUMNS, int ROWS, int &direction, bool &nextAst, int &playerDir);
-	//void ClydeMov(char **map, int COLUMNS, int ROWS, int &direction, bool &nextAst, int & playerDir);
-
-
-	//void InkyInitialPosition(Enemy Blinky, char **map, int COLUMNS, int ROWS);
-	//void ClydeInitialPosition(Enemy Blinky, char **map, int COLUMNS, int ROWS);
-
 };
