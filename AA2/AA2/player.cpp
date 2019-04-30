@@ -50,6 +50,7 @@ void Player::movementPlayer(char **map, int COLUMS, int ROWS, int &playerDir)
 		else
 			i--;
 	}
+
 	if (GetAsyncKeyState(VK_DOWN) && map[i + 1][j] != mapChar) //Down movement
 	{
 		map[i][j] = ' ';
@@ -59,7 +60,7 @@ void Player::movementPlayer(char **map, int COLUMS, int ROWS, int &playerDir)
 			score++;
 			i++;
 		}
-		else if (i > ROWS - 1)
+		else if (i + 1 > ROWS)
 			i = 1;
 		else
 			i++;

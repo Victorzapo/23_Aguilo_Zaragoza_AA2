@@ -2,6 +2,9 @@
 
 struct Player
 {
+
+	
+
 	int i; //Column
 	int j; //Row
 

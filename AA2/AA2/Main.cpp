@@ -4,12 +4,13 @@
 #include "Map.h"
 #include "player.h"
 #include "Constants.h"
-#include "Enemy.h"
+#include "EnemyBlinky.h"
 
 
 
 
 int main() {
+	srand(time(NULL));
 	/////////////////////////////////// initializations ///////////////////////////
 	//States
 	bool pause = false;
@@ -29,17 +30,19 @@ int main() {
 	player.i = 5;
 	player.j = 5;
 
-	Enemy Blinky(1, 1, map.map, 1);
+	EnemyBlinky Blinky(1, 1, map.map);
 	Blinky.i = 1;
 	Blinky.j = 1;
 
-	Enemy Inky(1, 10, map.map, 2);
+	//Hay que crear clases para cada uno
+	/*Enemy Inky(1, 10, map.map, 2);
 	Inky.i = 1;
 	Inky.j = 10;
 
 	Enemy Clyde(7, 10, map.map, 3);
 	Clyde.i = 7;
 	Clyde.j = 10;
+	*/
 
 	/*Enemy Blinky;
 	Enemy Clyde;
@@ -51,12 +54,9 @@ int main() {
 	Blinky.BlinkyInitialPosition(Blinky,map.map, map.COLUMNS, map.ROWS);
 	Inky.InkyInitialPosition(Inky, map.map, map.COLUMNS, map.ROWS);
 	Clyde.ClydeInitialPosition(Clyde, map.map, map.COLUMNS, map.ROWS);*/
-	bool nextAstBlinky = true;
-	bool nextAstInky = true;
-	bool nextAstClyde = true;
-
-	int direction = 4;
-	int playerDir = 4;
+	
+	int direction = 4; //Hay que hacer el Enum
+	int playerDir = 4; //Hay que hacer el Enum
 
 	/////////////////////////////// GAMELOOP /////////////////////////
 
@@ -86,9 +86,9 @@ int main() {
 			std::cout << "SCORE: " << player.score << std::endl;
 			player.movementPlayer(map.map, map.COLUMNS, map.ROWS, playerDir);
 
-			Blinky.BlinkyMov(map.map, map.COLUMNS, map.ROWS, direction, nextAstBlinky);
-			Inky.InkyMov(map.map, map.COLUMNS, map.ROWS, direction, nextAstInky, playerDir);
-			Clyde.ClydeMov(map.map, map.COLUMNS, map.ROWS, direction, nextAstClyde, playerDir);
+			Blinky.BlinkyMov(map, player);
+			//Inky.InkyMov(map.map, map.COLUMNS, map.ROWS, direction, nextAstInky, playerDir);
+			//Clyde.ClydeMov(map.map, map.COLUMNS, map.ROWS, direction, nextAstClyde, playerDir);
 
 			map.PrintMap();
 			SetConsoleTextAttribute(consolehwnd, 15);
@@ -97,12 +97,9 @@ int main() {
 			if (GetAsyncKeyState(0x50)) //Checks if "P" is presed
 				pause = true;
 
-			if (player.score == points || GetAsyncKeyState(VK_SPACE)) {
-				player.lifes--;
-				if (player.lifes == 0) {
-					init = false;
-					gameOver = true;
-				}
+			if (player.lifes == 0) { //Checks lifes of the player 
+				init = false;
+				gameOver = true;
 			}
 
 
