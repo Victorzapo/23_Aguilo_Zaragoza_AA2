@@ -15,121 +15,89 @@ EnemyInky::EnemyInky(int i, int j, char **map) {
 	map[i][j] = '&';
 }
 
-void EnemyInky::InkyMov(Map map, Player &player) {
+void EnemyInky::InkyMov(Map map, Player &player, bool keyboard[]) {
+	HANDLE consolehwnd = GetStdHandle(STD_OUTPUT_HANDLE);
 
+	if (lastPoint) //if the last position was a point it prints it
+		map.map[i][j] = '*';
+	else
+		map.map[i][j] = ' ';
+
+	hit = false;
 	//left 
-	if (GetAsyncKeyState(VK_LEFT) && map.map[i][j - 1] != mapChar) {
-		if (j == 0) {
-			if (lastPoint)
-				map.map[i][j] = '*';
-			else
-				map.map[i][j] = ' ';
+	if (keyboard[(int)InputKey::K_LEFT] && map.map[i][j - 1] != mapChar) {
 
-			if (map.map[i][map.ROWS - 1] == '*')
-				lastPoint = true;
-			else
-				lastPoint = false;
+		j--;
 
-			j = map.ROWS - 1;
-		}
-		else {
-			if (lastPoint)
-				map.map[i][j] = '*';
-			else
-				map.map[i][j] = ' ';
+		if (j < 0)
+			j = map.COLUMNS - 1;
 
-			if (map.map[i][j-1] == '*')
-				lastPoint = true;
-			else
-				lastPoint = false;
-			j--;
-		}
+		if (map.map[i][j] == '>' || map.map[i][j - 1] == '>')
+			hit = true;
+
+
 	}
 
 	//down
-	if (GetAsyncKeyState(VK_DOWN) && map.map[i + 1][j] != mapChar) {
-		if (i + 1 > map.ROWS) {
-			if (lastPoint)
-				map.map[i][j] = '*';
-			else
-				map.map[i][j] = ' ';
+	if (keyboard[(int)InputKey::K_DOWN] && map.map[i + 1][j] != mapChar) {
 
-			if (map.map[1][j] == '*')
-				lastPoint = true;
-			else
-				lastPoint = false;
+		i++;
 
+		if (i + 1 > map.ROWS - 1)
 			i = 1;
-		}
-		else {
-			if (lastPoint)
-				map.map[i][j] = '*';
-			else
-				map.map[i][j] = ' ';
+		else if (map.map[i][j] == '>' || map.map[i + 1][j] == '>')
+			hit = true;
 
-			if (map.map[i+1][j] == '*')
-				lastPoint = true;
-			else
-				lastPoint = false;
-			i++;
-		}
 	}
 
 	//right
-	if (GetAsyncKeyState(VK_RIGHT) && map.map[i][j + 1] != mapChar) {
-		if (j + 1 == map.ROWS) {
-			if (lastPoint)
-				map.map[i][j] = '*';
-			else
-				map.map[i][j] = ' ';
+	if (keyboard[(int)InputKey::K_RIGHT] && map.map[i][j + 1] != mapChar) {
 
-			if (map.map[i][0] == '*')
-				lastPoint = true;
-			else
-				lastPoint = false;
+
+		j++;
+
+
+		if (map.map[i][j] == '>' || map.map[i - 1][j] == '>')
+			hit = true;
+
+
+		if (j == map.COLUMNS)
 			j = 0;
-		}
-		else {
-			if (lastPoint)
-				map.map[i][j] = '*';
-			else
-				map.map[i][j] = ' ';
 
-			if (map.map[i][j+1] == '*')
-				lastPoint = true;
-			else
-				lastPoint = false;
-			j++;
-		}
+
 	}
 
 	//up
-	if (GetAsyncKeyState(VK_UP) && map.map[i - 1][j] != mapChar) {
-		if (i - 1 < 1) {
-			if (lastPoint)
-				map.map[i][j] = '*';
-			else
-				map.map[i][j] = ' ';
+	if (keyboard[(int)InputKey::K_UP] && map.map[i - 1][j] != mapChar) {
 
-			if (map.map[map.COLUMNS][j] == '*')
-				lastPoint = true;
-			else
-				lastPoint = false;
 
-			i = map.COLUMNS;
-		}
-		else {
-			if (lastPoint)
-				map.map[i][j] = '*';
-			else
-				map.map[i][j] = ' ';
+		i--;
 
-			if (map.map[i-1][j] == '*')
-				lastPoint = true;
-			else
-				lastPoint = false;
-			i--;
-		}
+
+		if (map.map[i][j] == '>' || map.map[i - 1][j] == '>')
+			hit = true;
+
+		if (i - 1 < 0)
+			i = map.ROWS - 2;
+	}
+
+
+
+	if (map.map[i][j] == '*') // Checks if last posicion was a point
+		lastPoint = true;
+	else
+		lastPoint = false;
+
+	if (hit) { //Checks enemy hit
+		player.lifes--;
+		map.PrintMap();
+		map.map[player.i][player.j] = ' ';
+		player.i = 5;
+		player.j = 5;
+		SetConsoleTextAttribute(consolehwnd, 15);
+		std::cout << "Hit!";
+		Sleep(2000);
+		system("CLS");
 	}
 
 

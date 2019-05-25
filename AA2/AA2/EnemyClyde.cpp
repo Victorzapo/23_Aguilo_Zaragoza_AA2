@@ -1,12 +1,7 @@
 #include "EnemyClyde.h"
-#include "EnemyInky.h"
 #include "Constants.h"
-#include "Map.h"
-#include "player.h"
-#include <cstdlib>
-#include <time.h>
-#include <iostream>
 #include <Windows.h>
+#include <iostream>
 
 EnemyClyde::EnemyClyde() {
 
@@ -16,121 +11,89 @@ EnemyClyde::EnemyClyde(int i, int j, char **map) {
 	map[i][j] = '$';
 }
 
-void EnemyClyde::ClydeMov(Map map, Player &player) {
+void EnemyClyde::ClydeMov(Map map, Player &player, bool keyboard[]) {
+	HANDLE consolehwnd = GetStdHandle(STD_OUTPUT_HANDLE);
+	
+	if (lastPoint) //if the last position was a point it prints it
+		map.map[i][j] = '*';
+	else
+		map.map[i][j] = ' ';
 
+	hit = false;
 	//left 
-	if (GetAsyncKeyState(VK_RIGHT) && map.map[i][j - 1] != mapChar) {
-		if (j == 0) {
-			if (lastPoint)
-				map.map[i][j] = '*';
-			else
-				map.map[i][j] = ' ';
+	if (keyboard[(int)InputKey::K_RIGHT] && map.map[i][j - 1] != mapChar) {
+		
+		j--;
 
-			if (map.map[i][map.ROWS - 1] == '*')
-				lastPoint = true;
-			else
-				lastPoint = false;
+		if (j < 0)
+			j = map.COLUMNS - 1;
 
-			j = map.ROWS - 1;
-		}
-		else {
-			if (lastPoint)
-				map.map[i][j] = '*';
-			else
-				map.map[i][j] = ' ';
+		if (map.map[i][j] == '>' || map.map[i][j - 1] == '>')
+			hit = true;
 
-			if (map.map[i][j - 1] == '*')
-				lastPoint = true;
-			else
-				lastPoint = false;
-			j--;
-		}
+
 	}
 
 	//down
-	if (GetAsyncKeyState(VK_UP) && map.map[i + 1][j] != mapChar) {
-		if (i + 1 > map.ROWS) {
-			if (lastPoint)
-				map.map[i][j] = '*';
-			else
-				map.map[i][j] = ' ';
-
-			if (map.map[1][j] == '*')
-				lastPoint = true;
-			else
-				lastPoint = false;
-
-			i = 1;
-		}
-		else {
-			if (lastPoint)
-				map.map[i][j] = '*';
-			else
-				map.map[i][j] = ' ';
-
-			if (map.map[i + 1][j] == '*')
-				lastPoint = true;
-			else
-				lastPoint = false;
+	if (keyboard[(int)InputKey::K_UP] && map.map[i + 1][j] != mapChar) {
+		
 			i++;
-		}
+
+		if (i + 1 > map.ROWS - 1)
+			i = 1;
+		else if (map.map[i][j] == '>' || map.map[i + 1][j] == '>')
+			hit = true;
+
 	}
 
 	//right
-	if (GetAsyncKeyState(VK_LEFT) && map.map[i][j + 1] != mapChar) {
-		if (j + 1 == map.ROWS) {
-			if (lastPoint)
-				map.map[i][j] = '*';
-			else
-				map.map[i][j] = ' ';
-
-			if (map.map[i][0] == '*')
-				lastPoint = true;
-			else
-				lastPoint = false;
-			j = 0;
-		}
-		else {
-			if (lastPoint)
-				map.map[i][j] = '*';
-			else
-				map.map[i][j] = ' ';
-
-			if (map.map[i][j + 1] == '*')
-				lastPoint = true;
-			else
-				lastPoint = false;
+	if (keyboard[(int)InputKey::K_LEFT] && map.map[i][j + 1] != mapChar) {
+		
+		
 			j++;
-		}
+
+
+		if (map.map[i][j] == '>' || map.map[i - 1][j] == '>')
+			hit = true;
+
+
+		if (j == map.COLUMNS)
+			j = 0;
+
+
 	}
 
 	//up
-	if (GetAsyncKeyState(VK_DOWN) && map.map[i - 1][j] != mapChar) {
-		if (i - 1 < 1) {
-			if (lastPoint)
-				map.map[i][j] = '*';
-			else
-				map.map[i][j] = ' ';
-
-			if (map.map[map.COLUMNS][j] == '*')
-				lastPoint = true;
-			else
-				lastPoint = false;
-
-			i = map.COLUMNS;
-		}
-		else {
-			if (lastPoint)
-				map.map[i][j] = '*';
-			else
-				map.map[i][j] = ' ';
-
-			if (map.map[i - 1][j] == '*')
-				lastPoint = true;
-			else
-				lastPoint = false;
+	if (keyboard[(int)InputKey::K_DOWN] && map.map[i - 1][j] != mapChar) {
+		
+		
 			i--;
-		}
+
+
+		if (map.map[i][j] == '>' || map.map[i - 1][j] == '>')
+			hit = true;
+
+		if (i - 1 < 0)
+			i = map.ROWS - 2;
+	}
+	
+	
+	
+	if (map.map[i][j] == '*') // Checks if last posicion was a point
+		lastPoint = true;
+	else
+		lastPoint = false;
+
+	if (hit) { //Checks enemy hit
+		player.lifes--;
+		map.PrintMap();
+		map.map[player.i][player.j] = ' ';
+		player.i = 5;
+		player.j = 5;
+		SetConsoleTextAttribute(consolehwnd, 15);
+		std::cout << "Hit!";
+		Sleep(2000);
+		system("CLS");
 	}
 
 

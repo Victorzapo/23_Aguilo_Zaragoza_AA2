@@ -6,15 +6,19 @@ class EnemyBlinky {
 
 public:
 
-	enum direction { UP, DOWN, LEFT, RIGHT };
-
+	enum directonMov {COUNT, UP, RIGHT, DOWN, LEFT};
+	
 	bool lastPoint = true;
+	bool changeDirection = false;
+	int lastDirection = 0;
+	int directionMovement = 1;
+
+
+
+	int aux;
 
 	int i; //Column
 	int j; //Row
-
-	direction actDirection = DOWN;
-	direction prevDirection;
 
 	EnemyBlinky();
 
@@ -22,12 +26,6 @@ public:
 
 	void BlinkyMov(Map map, Player &player);
 
-	//void InkyMov(char **map, int COLUMNS, int ROWS, int &direction, bool &nextAst, int &playerDir);
-	//void ClydeMov(char **map, int COLUMNS, int ROWS, int &direction, bool &nextAst, int & playerDir);
-
-
-	//void InkyInitialPosition(Enemy Blinky, char **map, int COLUMNS, int ROWS);
-	//void ClydeInitialPosition(Enemy Blinky, char **map, int COLUMNS, int ROWS);
 
 
 

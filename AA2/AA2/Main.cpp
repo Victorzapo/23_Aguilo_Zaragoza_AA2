@@ -7,17 +7,21 @@
 #include "EnemyBlinky.h"
 #include "EnemyInky.h"
 #include "EnemyClyde.h"
-
-
-
+#include "Keyboard.h"
 
 int main() {
 	srand(time(NULL));
 	/////////////////////////////////// initializations ///////////////////////////
+	int direction = 4; 
+	bool nextAstBlinky = true;
+
+
 	//States
+	bool keyboard[(int)InputKey::COUNT] = {false};
+
 	bool pause = false;
 	bool init = false;
-	bool gameOver = false;
+	bool gameOver = false; 
 	//initialize the map with config.txt information
 	HANDLE consolehwnd = GetStdHandle(STD_OUTPUT_HANDLE);
 
@@ -45,33 +49,10 @@ int main() {
 	Clyde.j = 8;
 
 	
-	/*Enemy Inky(1, 10, map.map, 2);
-	Inky.i = 1;
-	Inky.j = 10;
-
-	Enemy Clyde(7, 10, map.map, 3);
-	Clyde.i = 7;
-	Clyde.j = 10;
-	*/
-
-	/*Enemy Blinky;
-	Enemy Clyde;
-	Enemy Inky;
-	bool nextAstBlinky = true;
-	bool nextAstInky = true;
-	bool nextAstClyde = true;
-	//Blinky.InitialPosition(Blinky, Inky, Clyde, map.map, map.COLUMNS, map.ROWS);
-	Blinky.BlinkyInitialPosition(Blinky,map.map, map.COLUMNS, map.ROWS);
-	Inky.InkyInitialPosition(Inky, map.map, map.COLUMNS, map.ROWS);
-	Clyde.ClydeInitialPosition(Clyde, map.map, map.COLUMNS, map.ROWS);*/
 	
-	int direction = 4; //Hay que hacer el Enum
-	int playerDir = 4; //Hay que hacer el Enum
 
 	/////////////////////////////// GAMELOOP /////////////////////////
-
-	while (GetAsyncKeyState(VK_ESCAPE) == false) {
-
+	while (!keyboard[(int)InputKey::K_ESC]) {
 		if (pause) {
 
 			SetConsoleTextAttribute(consolehwnd, 15);
@@ -90,29 +71,32 @@ int main() {
 
 		else if (init) {
 
+			keyBoardControl(keyboard);
 
 			SetConsoleTextAttribute(consolehwnd, 15);
 			std::cout << "PLAYING" << std::endl;
 			std::cout << "SCORE: " << player.score << std::endl;
-			player.movementPlayer(map.map, map.COLUMNS, map.ROWS, playerDir);
+			player.movementPlayer(map, keyboard);
+			Clyde.ClydeMov(map, player, keyboard);
 
 			Blinky.BlinkyMov(map, player);
-			Inky.InkyMov(map, player);
-			Clyde.ClydeMov(map, player);
-			//Inky.InkyMov(map.map, map.COLUMNS, map.ROWS, direction, nextAstInky, playerDir);
-			//Clyde.ClydeMov(map.map, map.COLUMNS, map.ROWS, direction, nextAstClyde, playerDir);
+			Inky.InkyMov(map, player, keyboard);
+			
 
-			map.PrintMap();
-			SetConsoleTextAttribute(consolehwnd, 15);
-			player.printLifes();
-
-			if (GetAsyncKeyState(0x50)) //Checks if "P" is presed
+			if (keyboard[(int)InputKey::K_PAUSE]) //Checks if "P" is presed
 				pause = true;
 
 			if (player.lifes == 0) { //Checks lifes of the player 
 				init = false;
 				gameOver = true;
 			}
+			
+
+			map.PrintMap();
+			SetConsoleTextAttribute(consolehwnd, 15);
+			player.printLifes();
+
+			
 
 
 			Sleep(75);

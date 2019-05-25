@@ -1,17 +1,15 @@
 #pragma once
+#include "Map.h"
 
 struct Player
 {
-
-	
-
 	int i; //Column
 	int j; //Row
 
 	int lifes = 3;
 	int score = 0;
 
-	void movementPlayer(char **map, int COLUMS, int ROWS, int &playerDir);
+	void movementPlayer(Map map, bool key[]);
 	void printLifes();
 };
 

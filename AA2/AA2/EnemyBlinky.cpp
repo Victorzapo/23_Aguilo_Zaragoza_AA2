@@ -1,7 +1,7 @@
 #include "EnemyBlinky.h"
 #include "Constants.h"
 #include "Map.h"
-#include "player.h"
+
 #include <cstdlib>
 #include <time.h>
 #include <iostream>
@@ -17,108 +17,103 @@ EnemyBlinky::EnemyBlinky(int i, int j, char **map) {
 
 void EnemyBlinky::BlinkyMov(Map map, Player &player) {
 	HANDLE consolehwnd = GetStdHandle(STD_OUTPUT_HANDLE);
-	
-	bool changeDirection = false;
-
 	int aux;
 	
-	//Random position depending on the last one
-	aux = rand() % 4;
-	switch (aux)
-		{
-		case 0:
-			if (prevDirection == DOWN) // Cant do a 180º turn on all movements 
-				actDirection = DOWN;
-			else
-				actDirection = UP;
+	bool hit = false;
 
-			break;
-		case 1:
-			if (prevDirection == UP)
-				actDirection = UP;
-			else
-				actDirection = DOWN;
-
-			break;
-		case 2:
-			if (prevDirection == RIGHT)
-				actDirection = RIGHT;
-			else
-				actDirection = LEFT;
-
-			break;
-		case 3:
-			if (prevDirection == LEFT)
-				actDirection = LEFT;
-			else
-				actDirection = RIGHT;
-
-			break;
-		}
-	
-
-	//If the last position was a point it redraws it
-	if (lastPoint)
+	if(lastPoint) //if the last position was a point it prints it
 		map.map[i][j] = '*';
-	else
+	else 
 		map.map[i][j] = ' ';
 
-	if (actDirection == UP) {
 
-		if (map.map[i - 1][j] != mapChar) {
-			i--;
-			prevDirection = actDirection;
-		}
+	
+
+	
+
+	bool canMove = false;
+	do {
+		aux = rand() % 4 + 1;
+		if (aux == 1 && lastDirection != 3 && map.map[i - 1][j] != mapChar) canMove = true;
+		else if (aux == 2 && lastDirection != 4 && map.map[i][j + 1] != mapChar) canMove = true;
+		else if (aux == 3 && lastDirection != 1 && map.map[i + 1][j] != mapChar) canMove = true;
+		else if (aux == 4 && lastDirection != 2 && map.map[i][j - 1] != mapChar) canMove = true;
+		else canMove = false;
+
+	} while (!canMove);
+
+
+	
+	switch (aux)
+	{
+	case 1: //UP
+		lastDirection = 1;
+		i--;
 		
-		if (i < 1)
-			i = map.COLUMNS + 1;
-	}
 
-	else if(actDirection == DOWN) {
+		if (map.map[i][j] == '>' || map.map[i - 1][j] == '>')
+			hit = true;
 
-		if (map.map[i + 1][j] != mapChar) {
-			i++;
-			prevDirection = actDirection;
-		}
+		if (i - 1 < 0)
+			i = map.ROWS - 2;
 
-		if (i + 1 > map.COLUMNS + 1)
-			i = 1;
-	}
-
-	else if(actDirection == LEFT){
-
-		if (map.map[i][j - 1] != mapChar) {
-			j--;
-			prevDirection = actDirection;
-		}
 		
-		if (j == 0) 
-			j = map.ROWS - 1;
-	}
 
-	else if(actDirection == RIGHT){
+		break;
+	case 2: //RIGHT
+		lastDirection = 2;
+		j++; 
 
-		if (map.map[i][j + 1] != mapChar) {
-			j++;
-			prevDirection = actDirection;
-		}
 
-		if (j + 1 == map.ROWS)
+		if (j == map.COLUMNS)
 			j = 0;
+		
+		if (map.map[i][j] == '>' || map.map[i][j + 1] == '>')
+			hit = true;
+
+		break;
+	case 3: //DOWN
+		lastDirection = 3;
+		i++;
+		
+		
+		if (i + 1 > map.ROWS - 1)
+			i = 1;
+		else if (map.map[i][j] == '>' || map.map[i + 1][j] == '>') 
+			hit = true;
+		
+		
+
+		
+
+		break;
+	case 4: //LEFT
+		lastDirection = 4;
+		j--;
+		
+		if (j == 0)
+			j = map.COLUMNS - 1;
+
+		if (map.map[i][j] == '>' || map.map[i][j - 1] == '>')
+			hit = true;
+
+		break;
+
+	default:
+		break;
 	}
 	
-	//Checks if the position is a point
-	if (map.map[i][j] == '*')
+	if (map.map[i][j] == '*') // Checks if last posicion was a point
 		lastPoint = true;
 	else
 		lastPoint = false;
 
-
-	if (i == player.i && j == player.j) { //Checks enemy hit
+	if (hit) { //Checks enemy hit
 		player.lifes--;
+		map.PrintMap();
+		map.map[player.i][player.j] = ' ';
 		player.i = 5;
 		player.j = 5;
-		map.PrintMap();
 		SetConsoleTextAttribute(consolehwnd, 15);
 		std::cout << "Hit!";
 		Sleep(2000);
@@ -126,34 +121,22 @@ void EnemyBlinky::BlinkyMov(Map map, Player &player) {
 	}
 
 	map.map[i][j] = '#';
-	
-}
-
-/*
-
-void Enemy::InkyInitialPosition(Enemy Inky, char **map, int COLUMNS, int ROWS) {
-	for (int i = 0; i < COLUMNS; i++) {
-		for (int j = 0; j < ROWS; j++) {
-			if (map[i][j] == '&') {
-				Inky.i = i;
-				Inky.j = j;
-			}
-		}
-	}
-}
-void Enemy::ClydeInitialPosition(Enemy Clyde, char **map, int COLUMNS, int ROWS) {
-	for (int i = 0; i < COLUMNS; i++) {
-		for (int j = 0; j < ROWS; j++) {
-			if (map[i][j] == '$') {
-				Clyde.i = i;
-				Clyde.j = j;
-			}
-		}
-	}
 }
 
 
-*/
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
