@@ -6,6 +6,7 @@
 
 
 
+
 Map::Map() {
 
 
@@ -30,11 +31,27 @@ Map::Map() {
 		for (int j = 0; j < COLUMNS; j++) {
 			if (map[i][j] == 'X')
 				map[i][j] = mapChar;
+			if (map[i][j] == '#') {
+				BlinkyIposi = i;
+				BlinkyIposj = j;
+			}
+			if (map[i][j] == '&') {
+				InkyIposi = i;
+				InkyIposj = j;
+			}
+			if (map[i][j] == '$') {
+				ClydeIposi = i;
+				ClydeIposj = j;
+			}
+			if (map[i][j] == '>') {
+				playerIposi = i;
+				playerIposj = j;
+			}
+
 		}
 	}
 
 }
-
 
 void Map::PrintMap() {
 
@@ -46,6 +63,31 @@ void Map::PrintMap() {
 		for (int j = 0; j < COLUMNS; j++) {
 			if (map[i][j] == mapChar) {
 				SetConsoleTextAttribute(consolehwnd, FOREGROUND_BLUE);
+			}
+			else if (map[i][j] == '#') {
+
+				SetConsoleTextAttribute(consolehwnd, 4);
+
+			}
+			else if (map[i][j] == '&') {
+
+				SetConsoleTextAttribute(consolehwnd, 3);
+
+			}
+			else if (playerPw && map[i][j] == '>') {
+
+				SetConsoleTextAttribute(consolehwnd, 5);
+
+			}
+			else if (map[i][j] == '$') {
+
+				SetConsoleTextAttribute(consolehwnd, 10);
+
+			}
+			else if (map[i][j] == '0') {
+
+				SetConsoleTextAttribute(consolehwnd, 96);
+
 			}
 			else {
 				SetConsoleTextAttribute(consolehwnd, 15);
@@ -60,12 +102,11 @@ int Map::MaxPoints()
 {
 	int pointsCounter = 0;
 
-	for (int i = 0; i < ROWS; i++) {
-		for (int j = 0; j < COLUMNS; j++) {
+	for (int i = 0; i < ROWS; i++)
+		for (int j = 0; j < COLUMNS; j++)
 			if (map[i][j] == '*')
 				pointsCounter++;
-		}
-	}
+		
 	return pointsCounter;
 }
 

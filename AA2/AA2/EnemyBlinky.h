@@ -1,6 +1,9 @@
 #pragma once
 #include "Map.h"
 #include"player.h"
+#include "Constants.h"
+#include <iostream>
+#include <Windows.h>
 
 class EnemyBlinky {
 
@@ -8,7 +11,8 @@ public:
 
 	enum directonMov {COUNT, UP, RIGHT, DOWN, LEFT};
 	
-	bool lastPoint = true;
+	bool lastPointPoint = false;
+	bool lastPointPower = false;
 	bool changeDirection = false;
 	int lastDirection = 0;
 	int directionMovement = 1;

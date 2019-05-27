@@ -1,12 +1,17 @@
 #pragma once
 #include "Map.h"
-#include"player.h"
+#include "player.h"
+#include "Constants.h"
+#include <Windows.h>
+#include <iostream>
+
 
 class EnemyClyde {
 
 public:
 
-	bool lastPoint = false;
+	bool lastPointPoint = false;
+	bool lastPointPower = false;
 	bool hit = false;
 
 	int i; //Column
@@ -16,5 +21,5 @@ public:
 
 	EnemyClyde(int i, int j, char **map);
 
-	void ClydeMov(Map map, Player &player, bool key[]);
+	void ClydeMov(Map map, Player &player, bool keyboard[]);
 };

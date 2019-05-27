@@ -6,7 +6,8 @@ class EnemyInky {
 
 public:
 
-	bool lastPoint = false;
+	bool lastPointPoint = false;
+	bool lastPointPower = false;
 	bool hit = false;
 
 	int i; //Column

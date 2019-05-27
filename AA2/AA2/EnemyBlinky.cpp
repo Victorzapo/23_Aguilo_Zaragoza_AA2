@@ -1,11 +1,5 @@
 #include "EnemyBlinky.h"
-#include "Constants.h"
-#include "Map.h"
 
-#include <cstdlib>
-#include <time.h>
-#include <iostream>
-#include <Windows.h>
 
 EnemyBlinky::EnemyBlinky() {
 
@@ -21,9 +15,11 @@ void EnemyBlinky::BlinkyMov(Map map, Player &player) {
 	
 	bool hit = false;
 
-	if(lastPoint) //if the last position was a point it prints it
+	if (lastPointPoint) //if the last position was a point it prints it
 		map.map[i][j] = '*';
-	else 
+	else if (lastPointPower)
+		map.map[i][j] = '0';
+	else
 		map.map[i][j] = ' ';
 
 
@@ -51,8 +47,19 @@ void EnemyBlinky::BlinkyMov(Map map, Player &player) {
 		i--;
 		
 
-		if (map.map[i][j] == '>' || map.map[i - 1][j] == '>')
-			hit = true;
+		if (map.map[i][j] == '>' || map.map[i - 1][j] == '>') {
+			if (map.playerPw) {
+
+				i = map.BlinkyIposi;
+				j = map.BlinkyIposj;   
+
+				player.score += 15;
+
+			}
+			else
+				hit = true;
+	
+		}
 
 		if (i - 1 < 0)
 			i = map.ROWS - 2;
@@ -68,8 +75,17 @@ void EnemyBlinky::BlinkyMov(Map map, Player &player) {
 		if (j == map.COLUMNS)
 			j = 0;
 		
-		if (map.map[i][j] == '>' || map.map[i][j + 1] == '>')
-			hit = true;
+		if (map.map[i][j] == '>' || map.map[i][j + 1] == '>') {
+			if (map.playerPw) {
+
+				i = map.BlinkyIposi;
+				j = map.BlinkyIposj;
+				player.score += 15;
+			}
+			else
+				hit = true;
+
+		}
 
 		break;
 	case 3: //DOWN
@@ -79,8 +95,17 @@ void EnemyBlinky::BlinkyMov(Map map, Player &player) {
 		
 		if (i + 1 > map.ROWS - 1)
 			i = 1;
-		else if (map.map[i][j] == '>' || map.map[i + 1][j] == '>') 
-			hit = true;
+		else if (map.map[i][j] == '>' || map.map[i + 1][j] == '>') {
+			if (map.playerPw) {
+
+				i = map.BlinkyIposi;
+				j = map.BlinkyIposj;
+				player.score += 15;
+			}
+			else
+				hit = true;
+
+		}
 		
 		
 
@@ -94,8 +119,17 @@ void EnemyBlinky::BlinkyMov(Map map, Player &player) {
 		if (j == 0)
 			j = map.COLUMNS - 1;
 
-		if (map.map[i][j] == '>' || map.map[i][j - 1] == '>')
-			hit = true;
+		if (map.map[i][j] == '>' || map.map[i][j - 1] == '>') {
+			if (map.playerPw) {
+
+				i = map.BlinkyIposi;
+				j = map.BlinkyIposj;
+				player.score += 15;
+			}
+			else
+				hit = true;
+
+		}
 
 		break;
 
@@ -103,17 +137,26 @@ void EnemyBlinky::BlinkyMov(Map map, Player &player) {
 		break;
 	}
 	
-	if (map.map[i][j] == '*') // Checks if last posicion was a point
-		lastPoint = true;
-	else
-		lastPoint = false;
+	if (map.map[i][j] == '*') { // Checks if last posicion was a point
+		lastPointPoint = true;
+		lastPointPower = false;
+	}
+	else if (map.map[i][j] == '0') {
+		lastPointPower = true;
+		lastPointPoint = false;
+	}
+	else {
+		lastPointPoint = false;
+		lastPointPower = false;
+
+	}
 
 	if (hit) { //Checks enemy hit
 		player.lifes--;
 		map.PrintMap();
 		map.map[player.i][player.j] = ' ';
-		player.i = 5;
-		player.j = 5;
+		player.i = map.playerIposi;
+		player.j = map.playerIposj;
 		SetConsoleTextAttribute(consolehwnd, 15);
 		std::cout << "Hit!";
 		Sleep(2000);

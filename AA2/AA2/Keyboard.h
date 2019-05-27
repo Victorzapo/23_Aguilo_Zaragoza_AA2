@@ -13,6 +13,9 @@ void keyBoardControl(bool keyboard[]) {
 	keyboard[(int)InputKey::K_RIGHT] = GetAsyncKeyState(VK_RIGHT);
 	keyboard[(int)InputKey::K_LEFT] = GetAsyncKeyState(VK_LEFT);
 
+	keyboard[(int)InputKey::K_GAME_START] = GetAsyncKeyState(0x31);
+	keyboard[(int)InputKey::K_EXIT] = GetAsyncKeyState(0x30);
+	keyboard[(int)InputKey::K_RANKING] = GetAsyncKeyState(0x32);
 
 
 

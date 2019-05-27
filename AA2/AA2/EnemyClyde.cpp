@@ -1,7 +1,4 @@
 #include "EnemyClyde.h"
-#include "Constants.h"
-#include <Windows.h>
-#include <iostream>
 
 EnemyClyde::EnemyClyde() {
 
@@ -14,8 +11,10 @@ EnemyClyde::EnemyClyde(int i, int j, char **map) {
 void EnemyClyde::ClydeMov(Map map, Player &player, bool keyboard[]) {
 	HANDLE consolehwnd = GetStdHandle(STD_OUTPUT_HANDLE);
 	
-	if (lastPoint) //if the last position was a point it prints it
+	if (lastPointPoint) //if the last position was a point it prints it
 		map.map[i][j] = '*';
+	else if (lastPointPower)
+		map.map[i][j] = '0';
 	else
 		map.map[i][j] = ' ';
 
@@ -28,8 +27,17 @@ void EnemyClyde::ClydeMov(Map map, Player &player, bool keyboard[]) {
 		if (j < 0)
 			j = map.COLUMNS - 1;
 
-		if (map.map[i][j] == '>' || map.map[i][j - 1] == '>')
-			hit = true;
+		if (map.map[i][j] == '>' || map.map[i][j - 1] == '>') {
+			if (map.playerPw) {
+
+				i = map.ClydeIposi;
+				j = map.ClydeIposj;
+				player.score += 15;
+			}
+			else
+				hit = true;
+
+		}
 
 
 	}
@@ -41,8 +49,17 @@ void EnemyClyde::ClydeMov(Map map, Player &player, bool keyboard[]) {
 
 		if (i + 1 > map.ROWS - 1)
 			i = 1;
-		else if (map.map[i][j] == '>' || map.map[i + 1][j] == '>')
-			hit = true;
+		else if (map.map[i][j] == '>' || map.map[i + 1][j] == '>') {
+			if (map.playerPw) {
+
+				i = map.ClydeIposi;
+				j = map.ClydeIposj;
+				player.score += 15;
+			}
+			else
+				hit = true;
+
+		}
 
 	}
 
@@ -53,8 +70,17 @@ void EnemyClyde::ClydeMov(Map map, Player &player, bool keyboard[]) {
 			j++;
 
 
-		if (map.map[i][j] == '>' || map.map[i - 1][j] == '>')
-			hit = true;
+		if (map.map[i][j] == '>' || map.map[i - 1][j] == '>') {
+			if (map.playerPw) {
+
+				i = map.ClydeIposi;
+				j = map.ClydeIposj;
+				player.score += 15;
+			}
+			else
+				hit = true;
+
+		}
 
 
 		if (j == map.COLUMNS)
@@ -70,26 +96,57 @@ void EnemyClyde::ClydeMov(Map map, Player &player, bool keyboard[]) {
 			i--;
 
 
-		if (map.map[i][j] == '>' || map.map[i - 1][j] == '>')
-			hit = true;
+		if (map.map[i][j] == '>' || map.map[i - 1][j] == '>') {
+			if (map.playerPw) {
+
+				i = map.ClydeIposi;
+				j = map.ClydeIposj;
+				player.score += 15;
+			}
+			else
+				hit = true;
+
+		}
 
 		if (i - 1 < 0)
 			i = map.ROWS - 2;
 	}
 	
 	
+
+	if (player.i == i && player.j == j) { //If enemy is iddle
+		if (map.playerPw) {
+
+			i = map.InkyIposi;
+			j = map.InkyIposj;
+			player.score += 15;
+		}
+		else
+			hit = true;
+
+	}
+
 	
-	if (map.map[i][j] == '*') // Checks if last posicion was a point
-		lastPoint = true;
-	else
-		lastPoint = false;
+	if (map.map[i][j] == '*') { // Checks if last posicion was a point
+		lastPointPoint = true;
+		lastPointPower = false;
+	}
+	else if (map.map[i][j] == '0') {
+		lastPointPower = true;
+		lastPointPoint = false;
+	}
+	else {
+		lastPointPoint = false;
+		lastPointPower = false;
+
+	}
 
 	if (hit) { //Checks enemy hit
 		player.lifes--;
 		map.PrintMap();
 		map.map[player.i][player.j] = ' ';
-		player.i = 5;
-		player.j = 5;
+		player.i = map.playerIposi;
+		player.j = map.playerIposj;
 		SetConsoleTextAttribute(consolehwnd, 15);
 		std::cout << "Hit!";
 		Sleep(2000);
