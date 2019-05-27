@@ -31,11 +31,12 @@ Ranking::Ranking()
 void Ranking::addPS(int score)
 {
 	std::string name;
-	std::ofstream outputFile("ranking.txt");
+	
 	
 	std::cout << "Name: ";
 	std::cin >> name;
 
+	std::ofstream outputFile("ranking.txt");
 	outputFile << name << std::endl;
 	outputFile << score << std::endl;
 

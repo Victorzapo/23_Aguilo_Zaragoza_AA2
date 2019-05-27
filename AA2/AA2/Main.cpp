@@ -37,9 +37,9 @@ int main() {
 
 	//Player and enemys initialization
 	Player player;
-
 	player.i = map.playerIposi;
 	player.j = map.playerIposj;
+	
 
 	EnemyBlinky Blinky(map.BlinkyIposi, map.BlinkyIposj, map.map);
 	Blinky.i = map.BlinkyIposi;
@@ -99,8 +99,37 @@ int main() {
 
 
 			//Scene update
-			if (keyboard[(int)InputKey::K_GAME_START])
+			if (keyboard[(int)InputKey::K_GAME_START]) {
 				gameState = GameState::GAME;
+
+
+				//Restarts the game
+				
+				player.i = map.playerIposi;
+				player.j = map.playerIposj;
+
+				player.score = 0;
+				player.lifes = 3;
+				map.playerPw = false;
+
+			
+				Blinky.i = map.BlinkyIposi;
+				Blinky.j = map.BlinkyIposj;
+
+
+				
+				Inky.i = map.InkyIposi;
+				Inky.j = map.InkyIposj;
+
+				Clyde.i = map.ClydeIposi;
+				Clyde.j = map.ClydeIposj;
+
+
+
+				Map mapaux;
+
+				map = mapaux;
+			}
 			else if (keyboard[(int)InputKey::K_RANKING])
 				gameState = GameState::RANKING;
 			else if (keyboard[(int)InputKey::K_EXIT] || keyboard[(int)InputKey::K_ESC])
