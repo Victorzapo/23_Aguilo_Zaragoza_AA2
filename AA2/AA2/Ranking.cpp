@@ -41,6 +41,8 @@ void Ranking::addPS(int score)
 
 	ranking.insert(std::pair<std::string, int>(name, score));
 
+
+	//Reprints the map on te .txt
 	for (std::map<std::string, int>::iterator it = ranking.begin(); it != ranking.end(); ++it) {
 		
 		outputFile << it->first << std::endl;
@@ -66,6 +68,7 @@ void Ranking::printRanking()
 	for (std::map<std::string, int>::iterator it; counter <= 5; counter++) {
 		biggerNum = 0;
 
+		//Checks the bigger number
 		for (std::map<std::string, int>::iterator it2 = mapAux.begin(); it2 != mapAux.end(); ++it2) {
 			if (it2->second > biggerNum) {
 				it = it2;
@@ -74,6 +77,7 @@ void Ranking::printRanking()
 			
 		}
 
+		//Change the color depending of the position
 		if (counter == 1) {
 			SetConsoleTextAttribute(consolehwnd, 10);
 			std::cout << counter << " - " << it->first << " -> " << it->second << std::endl; 
@@ -86,8 +90,9 @@ void Ranking::printRanking()
 			SetConsoleTextAttribute(consolehwnd, 3);
 			std::cout << counter << " - " << it->first << " -> " << it->second << std::endl;
 		}
-		it->second = 0;
 		
+		//Erase the last bigger number
+		mapAux.erase(it);
 	}
 
 }

@@ -32,7 +32,9 @@ struct Map {
 
 	Map();
 
-	void PrintMap();
-	int MaxPoints();
+	void PrintMap(); //Prints the map on screen
+
+	int MaxPoints(); //Checks the number of points you can collect
+
 };
 

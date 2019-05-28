@@ -26,7 +26,7 @@ Map::Map() {
 	}
 	inFile.close();
 
-	//Changes all 'X' for walls
+	//Changes all 'X' for walls and puts enemys and player on the initial pos
 	for (int i = 0; i < ROWS; i++) {
 		for (int j = 0; j < COLUMNS; j++) {
 			if (map[i][j] == 'X')
@@ -56,9 +56,8 @@ Map::Map() {
 void Map::PrintMap() {
 
 	HANDLE consolehwnd = GetStdHandle(STD_OUTPUT_HANDLE);
-	//system("color 1"); //Changes color to blue
-	//SetConsoleTextAttribute(consolehwnd, FOREGROUND_BLUE);
 
+	//Depending the char it changes the color
 	for (int i = 0; i < ROWS; i++) {
 		for (int j = 0; j < COLUMNS; j++) {
 			if (map[i][j] == mapChar) {

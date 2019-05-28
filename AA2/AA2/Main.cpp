@@ -13,9 +13,6 @@
 int main() {
 	srand(time(NULL));
 	/////////////////////////////////// initializations ///////////////////////////
-	int direction = 4; 
-	bool nextAstBlinky = true;
-
 	//Ranking
 	
 	Ranking ranking;
@@ -26,15 +23,10 @@ int main() {
 	bool timerUp = false;
 	double secondsPassed;
 
-	//States
+	//States and key states
 	bool keyboard[(int)InputKey::COUNT] = {false};
 	GameState gameState = GameState::SPLASH_SCREEN;
 
-	
-
-	bool pause = false;
-	bool init = false;
-	bool gameOver = false; 
 	//initialize the map with config.txt information
 	HANDLE consolehwnd = GetStdHandle(STD_OUTPUT_HANDLE);
 
@@ -87,8 +79,12 @@ int main() {
 
 		case GameState::MAIN_MENU:
 
+
+			//Input control
 			keyBoardControl(keyboard);
 			
+
+			//Interface
 			SetConsoleTextAttribute(consolehwnd, 96);
 			std::cout << "*-*-*-MAIN MENU-*-*-*" << std::endl;
 
@@ -101,6 +97,8 @@ int main() {
 			SetConsoleTextAttribute(consolehwnd, 4);
 			std::cout << "0 - Exit" << std::endl;
 
+
+			//Scene update
 			if (keyboard[(int)InputKey::K_GAME_START])
 				gameState = GameState::GAME;
 			else if (keyboard[(int)InputKey::K_RANKING])
@@ -117,14 +115,11 @@ int main() {
 
 		case GameState::GAME:
 
+			//Input control
 			keyBoardControl(keyboard);
-
-			SetConsoleTextAttribute(consolehwnd, 15);
-			std::cout << "PLAYING" << std::endl;
-			std::cout << "SCORE: " << player.score << std::endl;
 			
+			//Updates
 			player.movementPlayer(map, keyboard);
-
 			Blinky.BlinkyMov(map, player);
 			Inky.InkyMov(map, player, keyboard);
 			Clyde.ClydeMov(map, player, keyboard);
@@ -141,8 +136,6 @@ int main() {
 					timerUp = false;
 				}
 			}
-			
-
 
 			if (keyboard[(int)InputKey::K_PAUSE]) //Checks if "P" is presed
 				gameState = GameState::PAUSE;
@@ -155,9 +148,16 @@ int main() {
 			else if (player.RecPoints == points)
 				gameState = GameState::GAME_OVER;
 
+			//Top interface
+			SetConsoleTextAttribute(consolehwnd, 15);
+			std::cout << "PLAYING" << std::endl;
+			std::cout << "SCORE: " << player.score << std::endl;
 
+			//Map
 			map.PrintMap();
 			SetConsoleTextAttribute(consolehwnd, 15);
+
+			//Bot interface
 			player.printLifes();
 
 
@@ -184,7 +184,7 @@ int main() {
 				gameState = GameState::MAIN_MENU;
 			keyboard[(int)InputKey::K_ESC] = false;
 
-			Sleep(75);
+			Sleep(100);
 			system("CLS");
 			break;
 

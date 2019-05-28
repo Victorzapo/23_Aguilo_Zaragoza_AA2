@@ -17,7 +17,7 @@ void EnemyBlinky::BlinkyMov(Map map, Player &player) {
 
 	if (lastPointPoint) //if the last position was a point it prints it
 		map.map[i][j] = '*';
-	else if (lastPointPower)
+	else if (lastPointPower)  //if the last position was a powerUp it prints it
 		map.map[i][j] = '0';
 	else
 		map.map[i][j] = ' ';
@@ -28,7 +28,7 @@ void EnemyBlinky::BlinkyMov(Map map, Player &player) {
 	
 
 	bool canMove = false;
-	do {
+	do { //Conditions to move
 		aux = rand() % 4 + 1;
 		if (aux == 1 && lastDirection != 3 && map.map[i - 1][j] != mapChar) canMove = true;
 		else if (aux == 2 && lastDirection != 4 && map.map[i][j + 1] != mapChar) canMove = true;
@@ -47,6 +47,10 @@ void EnemyBlinky::BlinkyMov(Map map, Player &player) {
 		i--;
 		
 
+		if (i - 1 < 0)
+			i = map.ROWS - 2;
+
+
 		if (map.map[i][j] == '>' || map.map[i - 1][j] == '>') {
 			if (map.playerPw) {
 
@@ -61,9 +65,7 @@ void EnemyBlinky::BlinkyMov(Map map, Player &player) {
 	
 		}
 
-		if (i - 1 < 0)
-			i = map.ROWS - 2;
-
+		
 		
 
 		break;
@@ -95,7 +97,9 @@ void EnemyBlinky::BlinkyMov(Map map, Player &player) {
 		
 		if (i + 1 > map.ROWS - 1)
 			i = 1;
-		else if (map.map[i][j] == '>' || map.map[i + 1][j] == '>') {
+
+
+		if (map.map[i][j] == '>' || map.map[i + 1][j] == '>') {
 			if (map.playerPw) {
 
 				i = map.BlinkyIposi;
@@ -137,11 +141,15 @@ void EnemyBlinky::BlinkyMov(Map map, Player &player) {
 		break;
 	}
 	
+
+	//This enemy is never on iddle
+
+
 	if (map.map[i][j] == '*') { // Checks if last posicion was a point
 		lastPointPoint = true;
 		lastPointPower = false;
 	}
-	else if (map.map[i][j] == '0') {
+	else if (map.map[i][j] == '0') { // Checks if last posicion was a powerUP
 		lastPointPower = true;
 		lastPointPoint = false;
 	}
@@ -151,7 +159,7 @@ void EnemyBlinky::BlinkyMov(Map map, Player &player) {
 
 	}
 
-	if (hit) { //Checks enemy hit
+	if (hit) { //Checks hit
 		player.lifes--;
 		map.PrintMap();
 		map.map[player.i][player.j] = ' ';

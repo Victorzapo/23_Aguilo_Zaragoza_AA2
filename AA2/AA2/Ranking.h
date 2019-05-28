@@ -15,8 +15,8 @@ public:
 
 	
 
-	void addPS(int score);
+	void addPS(int score); //Add a player to the map and save it on .txt
 	
-	void printRanking();
+	void printRanking(); //Prints a ordered ranking 
 };
 

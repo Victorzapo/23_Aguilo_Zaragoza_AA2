@@ -1,9 +1,5 @@
 #include "EnemyInky.h"
-#include "Constants.h"
-#include <cstdlib>
-#include <time.h>
-#include <iostream>
-#include <Windows.h>
+
 
 EnemyInky::EnemyInky() {
 
@@ -16,9 +12,9 @@ EnemyInky::EnemyInky(int i, int j, char **map) {
 void EnemyInky::InkyMov(Map map, Player &player, bool keyboard[]) {
 	HANDLE consolehwnd = GetStdHandle(STD_OUTPUT_HANDLE);
 
-	if (lastPointPoint) //if the last position was a point it prints it
+	if (lastPointPoint) //if the last position was a point prints it
 		map.map[i][j] = '*';
-	else if(lastPointPower)
+	else if(lastPointPower) //if the last position was a powerUp prints it
 		map.map[i][j] = '0';
 	else
 		map.map[i][j] = ' ';
@@ -27,14 +23,16 @@ void EnemyInky::InkyMov(Map map, Player &player, bool keyboard[]) {
 	//left 
 	if (keyboard[(int)InputKey::K_LEFT] && map.map[i][j - 1] != mapChar) {
 
+		//Update Position (Same all movements)
 		j--;
 
+		//Tp (Same all movements)
 		if (j < 0)
 			j = map.COLUMNS - 1;
 
+		//Colision (Same all movements)
 		if (map.map[i][j] == '>' || map.map[i][j - 1] == '>' ){
 			if (map.playerPw) {
-
 				i = map.InkyIposi;
 				j = map.InkyIposj;
 				player.score += 15;
@@ -54,6 +52,7 @@ void EnemyInky::InkyMov(Map map, Player &player, bool keyboard[]) {
 
 		if (i + 1 > map.ROWS - 1)
 			i = 1;
+
 		else if (map.map[i][j] == '>' || map.map[i + 1][j] == '>') {
 			if (map.playerPw) {
 
@@ -75,6 +74,10 @@ void EnemyInky::InkyMov(Map map, Player &player, bool keyboard[]) {
 		j++;
 
 
+		if (j == map.COLUMNS)
+			j = 0;
+
+
 		if (map.map[i][j] == '>' || map.map[i - 1][j] == '>') {
 			if (map.playerPw) {
 
@@ -89,9 +92,7 @@ void EnemyInky::InkyMov(Map map, Player &player, bool keyboard[]) {
 
 
 
-		if (j == map.COLUMNS)
-			j = 0;
-
+		
 
 	}
 
@@ -102,6 +103,9 @@ void EnemyInky::InkyMov(Map map, Player &player, bool keyboard[]) {
 		i--;
 
 
+		if (i - 1 < 0)
+			i = map.ROWS - 2;
+
 		if (map.map[i][j] == '>' || map.map[i - 1][j] == '>') {
 			if (map.playerPw) {
 
@@ -115,8 +119,7 @@ void EnemyInky::InkyMov(Map map, Player &player, bool keyboard[]) {
 		}
 
 
-		if (i - 1 < 0)
-			i = map.ROWS - 2;
+		
 	}
 
 
@@ -138,7 +141,7 @@ void EnemyInky::InkyMov(Map map, Player &player, bool keyboard[]) {
 		lastPointPoint = true;
 		lastPointPower = false;
 	}
-	else if (map.map[i][j] == '0') {
+	else if (map.map[i][j] == '0') { // Checks if last posicion was a powerUp
 		lastPointPower = true;
 		lastPointPoint = false;
 	}
@@ -147,7 +150,9 @@ void EnemyInky::InkyMov(Map map, Player &player, bool keyboard[]) {
 		lastPointPower = false;
 
 	}
-	if (hit) { //Checks enemy hit
+
+
+	if (hit) { //Checks hit
 		player.lifes--;
 		map.PrintMap();
 		map.map[player.i][player.j] = ' ';

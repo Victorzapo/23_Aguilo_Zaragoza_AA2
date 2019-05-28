@@ -13,7 +13,7 @@ void EnemyClyde::ClydeMov(Map map, Player &player, bool keyboard[]) {
 	
 	if (lastPointPoint) //if the last position was a point it prints it
 		map.map[i][j] = '*';
-	else if (lastPointPower)
+	else if (lastPointPower) //if the last position was a powerUp it prints it
 		map.map[i][j] = '0';
 	else
 		map.map[i][j] = ' ';
@@ -49,6 +49,7 @@ void EnemyClyde::ClydeMov(Map map, Player &player, bool keyboard[]) {
 
 		if (i + 1 > map.ROWS - 1)
 			i = 1;
+
 		else if (map.map[i][j] == '>' || map.map[i + 1][j] == '>') {
 			if (map.playerPw) {
 
@@ -70,6 +71,10 @@ void EnemyClyde::ClydeMov(Map map, Player &player, bool keyboard[]) {
 			j++;
 
 
+		if (j == map.COLUMNS)
+			j = 0;
+
+
 		if (map.map[i][j] == '>' || map.map[i - 1][j] == '>') {
 			if (map.playerPw) {
 
@@ -83,8 +88,6 @@ void EnemyClyde::ClydeMov(Map map, Player &player, bool keyboard[]) {
 		}
 
 
-		if (j == map.COLUMNS)
-			j = 0;
 
 
 	}
@@ -96,6 +99,10 @@ void EnemyClyde::ClydeMov(Map map, Player &player, bool keyboard[]) {
 			i--;
 
 
+		if (i - 1 < 0)
+			i = map.ROWS - 2;
+
+
 		if (map.map[i][j] == '>' || map.map[i - 1][j] == '>') {
 			if (map.playerPw) {
 
@@ -108,8 +115,7 @@ void EnemyClyde::ClydeMov(Map map, Player &player, bool keyboard[]) {
 
 		}
 
-		if (i - 1 < 0)
-			i = map.ROWS - 2;
+		
 	}
 	
 	
@@ -131,7 +137,7 @@ void EnemyClyde::ClydeMov(Map map, Player &player, bool keyboard[]) {
 		lastPointPoint = true;
 		lastPointPower = false;
 	}
-	else if (map.map[i][j] == '0') {
+	else if (map.map[i][j] == '0') { // Checks if last posicion was a poweUp
 		lastPointPower = true;
 		lastPointPoint = false;
 	}
@@ -141,7 +147,7 @@ void EnemyClyde::ClydeMov(Map map, Player &player, bool keyboard[]) {
 
 	}
 
-	if (hit) { //Checks enemy hit
+	if (hit) { //Checks hit
 		player.lifes--;
 		map.PrintMap();
 		map.map[player.i][player.j] = ' ';

@@ -19,7 +19,7 @@ public:
 
 	EnemyClyde();
 
-	EnemyClyde(int i, int j, char **map);
+	EnemyClyde(int i, int j, char **map); //inserts the enemy on the map
 
-	void ClydeMov(Map map, Player &player, bool keyboard[]);
+	void ClydeMov(Map map, Player &player, bool keyboard[]); //Updates the position of the enemy
 };

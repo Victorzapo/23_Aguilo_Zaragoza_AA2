@@ -26,9 +26,9 @@ public:
 
 	EnemyBlinky();
 
-	EnemyBlinky(int i, int j, char **map);
+	EnemyBlinky(int i, int j, char **map); //inserts the enemy on the map
 
-	void BlinkyMov(Map map, Player &player);
+	void BlinkyMov(Map map, Player &player); //Updates the position of the enemys
 
 
 

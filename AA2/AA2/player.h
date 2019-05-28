@@ -14,8 +14,9 @@ struct Player
 	int score = 0;
 	int RecPoints = 0;
 
-	void movementPlayer(Map &map, bool keyboard[]);
-	void printLifes();
+	void movementPlayer(Map &map, bool keyboard[]); //Update the position of the player
+
+	void printLifes(); //Prints lifes on the bottom of the screen
 };
 
 

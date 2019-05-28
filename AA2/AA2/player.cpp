@@ -12,8 +12,8 @@ void Player::movementPlayer(Map &map, bool keyboard[])
 			score++; //Update score if points (Same on all movements)
 			RecPoints++;
 		}
-		else if (map.map[i][j - 1] == '0')
-			map.playerPw = true;
+		else if (map.map[i][j - 1] == '0')//Checks if powerUp (Same all movements)
+			map.playerPw = true;	//Activate the powerUp (Same all movements)
 	
 		if (j == 0) //Limit check (Same on all movements)
 			j = map.COLUMNS - 1; //New position if is on the limit (Same on all movements)

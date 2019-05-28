@@ -1,6 +1,11 @@
 #pragma once
 #include "Map.h"
 #include"player.h"
+#include "Constants.h"
+#include <cstdlib>
+#include <time.h>
+#include <iostream>
+#include <Windows.h>
 
 class EnemyInky {
 
@@ -15,7 +20,7 @@ public:
 
 	EnemyInky();
 
-	EnemyInky(int i, int j, char **map);
+	EnemyInky(int i, int j, char **map); //inserts the enemy on the map
 
-	void InkyMov(Map map, Player &player, bool keyboard[]);
+	void InkyMov(Map map, Player &player, bool keyboard[]); //Update the position of the enemy
 };
