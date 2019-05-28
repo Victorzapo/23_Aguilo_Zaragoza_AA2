@@ -118,6 +118,12 @@ int main() {
 			//Input control
 			keyBoardControl(keyboard);
 			
+
+			//Top interface
+			SetConsoleTextAttribute(consolehwnd, 15);
+			std::cout << "PLAYING" << std::endl;
+			std::cout << "SCORE: " << player.score << std::endl;
+
 			//Updates
 			player.movementPlayer(map, keyboard);
 			Blinky.BlinkyMov(map, player);
@@ -147,11 +153,6 @@ int main() {
 
 			else if (player.RecPoints == points)
 				gameState = GameState::GAME_OVER;
-
-			//Top interface
-			SetConsoleTextAttribute(consolehwnd, 15);
-			std::cout << "PLAYING" << std::endl;
-			std::cout << "SCORE: " << player.score << std::endl;
 
 			//Map
 			map.PrintMap();
